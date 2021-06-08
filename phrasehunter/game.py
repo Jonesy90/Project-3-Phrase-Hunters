@@ -29,10 +29,11 @@ class Game:
 		self.welcome()
 
 		while self.missed < 5 and self.active_phrase.check_complete(self.correct_guesses) == False:
+			print(f'Phrases: {self.phrases}')
 			self.active_phrase.display(self.guesses)
 			users_guess = self.get_guess()
 			self.guesses.append(users_guess)
-			
+
 			#CHECKING USERS GUESS
 			if self.active_phrase.check_letter(users_guess) != True:
 				self.missed += 1
@@ -46,18 +47,25 @@ class Game:
 
 		self.game_over()
 
+	#List of phrases to be used.
 	def create_phrase(self):
 		#A method which creates 5 marvel phrases.
-		marvel_phrases = [Phrase("I am Ironman")]
+		marvel_phrases = [	Phrase("Wakanda Forever"), 
+							Phrase("I am Ironman"), 
+							Phrase("We are Groot"), 
+							Phrase("We have a Hulk"), 
+							Phrase("I could do this all day")]
 		return marvel_phrases
 
 
+	#Randomly retreives one of the phrases stored in 'phrases' list.
 	def get_random_phrase(self):
-		#Randomly retreives one of the phrases stored in 'phrases' list.
 		random_phrase = random.choice(self.phrases)
+		print(f'Random Choice: {random_phrase}')
 		return random_phrase
 
 
+	#Welcome message function.
 	def welcome(self):
 		#Prints a friendly welcom message at start of game.
 		print('''
@@ -66,6 +74,7 @@ class Game:
 			\r ##############################\n''')
 
 
+	#Getting the users guess and checking it to see if it is valid. If so, it will get passed on.
 	def get_guess(self):
 		valid_letters = ascii_lowercase
 		try:
@@ -80,13 +89,13 @@ class Game:
 		except ValueError:
 			users_guess = input('\n\nNot Valid: Please try again: ').lower()
 
-
+	#Game is over. The user has the option to select if they will like to play again or end the game.
 	def game_over(self):
 		#Displays a friendly win or loss mesage at the end.
 		if self.missed < 5:
-			print('\n\nYOU WON! -- CONGRATULATIONS')
+			print('\n\nYOU WON! -- CONGRATULATIONS\n')
 		else:
-			print('\n\nYOU LOSE! -- ALL GUESSES USED')
+			print('\n\nYOU LOSE! -- ALL GUESSES USED\n')
 
 		replay = input("Would you like to play again (Y/N): ").lower()
 		if replay == "y":
@@ -96,7 +105,7 @@ class Game:
 		else:
 			print("END GAME")
 
-
+	#Function to resent if the user wants to reply the game.
 	def reset(self):
 		self.guesses = [" "]
 		self.correct_guesses = [" "]
