@@ -32,6 +32,7 @@ class Game:
 			self.active_phrase.display(self.guesses)
 			users_guess = self.get_guess()
 			self.guesses.append(users_guess)
+			
 			#CHECKING USERS GUESS
 			if self.active_phrase.check_letter(users_guess) != True:
 				self.missed += 1
